@@ -221,9 +221,9 @@ export default function App() {
     <div className={`min-h-screen flex flex-col transition-colors duration-500 relative overflow-hidden ${isDarkMode ? 'bg-slate-900 text-slate-200' : 'bg-slate-50 text-slate-800'}`}>
       
       {/* Background Animasi Elegan (Blob) */}
-      <div className="absolute top-0 left-0 w-full h-96 overflow-hidden pointer-events-none z-0">
-        <div className={`absolute top-[-10%] left-[-10%] w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse ${isDarkMode ? 'bg-indigo-900' : 'bg-blue-200'}`}></div>
-        <div className={`absolute top-[20%] right-[-10%] w-80 h-80 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-700 ${isDarkMode ? 'bg-purple-900' : 'bg-indigo-200'}`}></div>
+      <div className="absolute top-0 left-0 w-full h-[600px] md:h-[800px] overflow-hidden pointer-events-none z-0" style={{ maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)' }}>
+        <div className={`absolute top-[-5%] left-[-10%] w-[500px] h-[500px] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse ${isDarkMode ? 'bg-indigo-900' : 'bg-blue-200'}`}></div>
+        <div className={`absolute top-[10%] right-[-10%] w-[400px] h-[400px] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-700 ${isDarkMode ? 'bg-purple-900' : 'bg-indigo-200'}`}></div>
       </div>
 
       {/* Pop-up Sukses Disimpan */}
@@ -366,25 +366,38 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Kuesioner Skala Likert dengan Jarak yang Diperbaiki */}
+              {/* Kuesioner Skala Likert */}
               <div className="space-y-6">
                 {questions.map((q, index) => (
                   <div key={q.id} className="pb-6 border-b border-slate-100 dark:border-slate-700/50 last:border-0 group">
                     <p className="font-semibold text-sm sm:text-base mb-5 leading-relaxed transition-colors group-hover:text-indigo-500 dark:group-hover:text-indigo-400">
                       <span className="text-slate-400 mr-1">{index + 1}.</span> {q.label}
                     </p>
-                    <div className="flex justify-between items-center w-full max-w-lg mx-auto sm:mx-0">
-                      <span className={`w-16 sm:w-20 text-[10px] font-extrabold uppercase tracking-widest text-left leading-tight shrink-0 mr-2 sm:mr-4 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                    
+                    <div className="w-full max-w-lg mx-auto sm:mx-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+                      
+                      {/* Label Mobile (Muncul di atas tombol khusus HP) */}
+                      <div className="flex justify-between w-full sm:hidden px-1">
+                        <span className={`text-[10px] font-extrabold uppercase tracking-widest text-left leading-tight ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Sangat<br/>Tidak Setuju</span>
+                        <span className={`text-[10px] font-extrabold uppercase tracking-widest text-right leading-tight ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>Sangat<br/>Setuju</span>
+                      </div>
+
+                      {/* Label Desktop Kiri */}
+                      <span className={`hidden sm:block w-20 text-[10px] font-extrabold uppercase tracking-widest text-left leading-tight shrink-0 mr-4 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                         Sangat<br/>Tidak Setuju
                       </span>
-                      <div className="flex gap-2 sm:gap-3 shrink-0">
+                      
+                      {/* Tombol Angka 1-5 */}
+                      <div className="flex justify-between w-full sm:w-auto gap-2 sm:gap-3 shrink-0 px-2 sm:px-0">
                         {[1, 2, 3, 4, 5].map(val => (
-                          <button key={val} onClick={() => handleAnswer(q.id, val)} disabled={result !== null && !result.error} className={`h-10 w-10 sm:h-11 sm:w-11 rounded-full text-sm font-extrabold transition-all duration-200 flex items-center justify-center border-2 ${answers[q.id] === val ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/40 scale-110' : isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300 hover:border-indigo-500 disabled:opacity-30' : 'bg-white border-slate-200 text-slate-500 hover:border-indigo-400 hover:bg-indigo-50 disabled:opacity-40'}`}>
+                          <button key={val} onClick={() => handleAnswer(q.id, val)} disabled={result !== null && !result.error} className={`h-10 w-10 sm:h-11 sm:w-11 rounded-full text-sm font-extrabold transition-all duration-200 flex items-center justify-center border-2 shrink-0 ${answers[q.id] === val ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/40 scale-110' : isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300 hover:border-indigo-500 disabled:opacity-30' : 'bg-white border-slate-200 text-slate-500 hover:border-indigo-400 hover:bg-indigo-50 disabled:opacity-40'}`}>
                             {val}
                           </button>
                         ))}
                       </div>
-                      <span className={`w-16 sm:w-20 text-[10px] font-extrabold text-right uppercase tracking-widest leading-tight shrink-0 ml-2 sm:ml-4 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+
+                      {/* Label Desktop Kanan */}
+                      <span className={`hidden sm:block w-20 text-[10px] font-extrabold uppercase tracking-widest text-right leading-tight shrink-0 ml-4 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>
                         Sangat<br/>Setuju
                       </span>
                     </div>
